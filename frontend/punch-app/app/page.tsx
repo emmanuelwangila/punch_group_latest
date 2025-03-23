@@ -31,24 +31,22 @@ export default function Home() {
     author: string;
   }
 
-  const createPost = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
+  const createPost = async (post: Post) => {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newPosts),
+        body: JSON.stringify(post),
       });
 
-      setNewPosts([{ title: "", content: "", author: "" }]);
-      fetchPosts();
-    } catch (error) {
-      console.error("Error creating post", error);
-    }
+      if (response.ok) {
+        fetchPosts();
+      } else {
+        console.error("Error creating a post");
+      }
+    } catch (error) {}
   };
 
   const handleDelete = async (id: string) => {
@@ -60,6 +58,24 @@ export default function Home() {
     } catch (error) {
       console.error("Error deleteing post", error);
     }
+  };
+
+  const updatePost = async (id: string, post: Post) => {
+    try {
+      const response = await fetch(`${API_URL}${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(post),
+      });
+
+      if (response.ok) {
+        fetchPosts();
+      } else {
+        console.error("Errors updating a apost");
+      }
+    } catch (error) {}
   };
   return (
     <div className="flex flex-col bg-gray-100 min-h-screen rounded-md  m-4 p-4 font-sans">
