@@ -50,6 +50,17 @@ export default function Home() {
       console.error("Error creating post", error);
     }
   };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch(`${API_URL}${id}`, {
+        method: "DELETE",
+      });
+      fetchPosts();
+    } catch (error) {
+      console.error("Error deleteing post", error);
+    }
+  };
   return (
     <div className="flex flex-col bg-gray-100 min-h-screen rounded-md  m-4 p-4 font-sans">
       <h1 className="text-blue-500 flex justify-center  ">
