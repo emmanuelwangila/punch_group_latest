@@ -33,3 +33,15 @@ router.get("/api/posts/:id", async (req, res) => {
     res.status(500).json({ error: "Server error fetching the post" });
   }
 });
+
+router.put("/api/posts/:id", async (req, res) => {
+  try {
+    const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updatePost) return res.status(404).json({ error: "Post not found" });
+    res.status(200).json(updatePost);
+  } catch (error) {
+    res.status(500).json({ error: "Server error updating the post" });
+  }
+});
