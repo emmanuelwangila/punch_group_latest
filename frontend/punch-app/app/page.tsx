@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 const API_URL = "http://localhost:5000/api/posts/";
 
 import Image from "next/image";
-import { title } from "process";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -44,6 +43,9 @@ export default function Home() {
         },
         body: JSON.stringify(newPosts),
       });
+
+      setNewPosts([{ title: "", content: "", author: "" }]);
+      fetchPosts();
     } catch (error) {
       console.error("Error creating post", error);
     }
