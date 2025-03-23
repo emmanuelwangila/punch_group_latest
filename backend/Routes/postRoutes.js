@@ -54,3 +54,5 @@ router.delete("/api/posts/:id", async (req, res) => {
     res.status(500).json({ error: "Server error deleting the post" });
   }
 });
+
+module.exports = router;
