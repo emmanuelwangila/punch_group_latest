@@ -45,3 +45,12 @@ router.put("/api/posts/:id", async (req, res) => {
     res.status(500).json({ error: "Server error updating the post" });
   }
 });
+
+router.delete("/api/posts/:id", async (req, res) => {
+  try {
+    const deletePost = await Post.findByIdAndDelete(req.params.id);
+    if (!deletePost) return res.status(404).json({ error: "Post not found" });
+  } catch (error) {
+    res.status(500).json({ error: "Server error deleting the post" });
+  }
+});
